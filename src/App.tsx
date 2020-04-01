@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Typography from '@material-ui/core/Typography';
+import ToDoList from './ToDoList';
+import ToDoForm from './ToDoForm';
 
-function App() {
+
+
+const App = () => {
+  const [error, setError] = useState('');
+  const defaultTodos = [
+    'Buy groceries',
+    'Mow lawn',
+    'Sort mail',
+  ];
+  const [todos, setTodos] = useState(defaultTodos);
+
+  const onSubmit = (e: any, todo: string) => {
+    e.preventDefault();
+    console.log('onSubmit', todo, typeof(todo));
+  
+    if (todo === '') setError('You cannot submit a blank todo');
+    todos.push(todo);
+
+    setTodos(todos);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+      <Typography variant="h2">
+          To Do App
+        </Typography>
+      <ToDoList todos={todos} />
+      <ToDoForm onSubmit={onSubmit} error={error} />
+    </>
+  )
+};
 
 export default App;
