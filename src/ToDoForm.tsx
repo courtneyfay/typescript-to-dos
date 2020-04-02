@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 
-const ToDoForm = (props: any) => {
+const ToDoForm = (props: { onSubmit: Function, error: string }) => {
   const [todo, setTodo] = useState('');
   const { onSubmit, error } = props;
 
-  const handleChange = (e: any) => {
-    const value = e && e.target && e.target.value;
+  const handleChange = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
 
     setTodo(value);
   };
